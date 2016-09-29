@@ -116,10 +116,8 @@ public class FitnessDataCollector {
                 i++;
             }
 
-            if (i < lsize) {
                 if (list.get(0).getValue() instanceof Integer) {
                     Record<Integer> sum = new Record<>(null, 0);
-
                     while (i < lsize && list.get(i).getDate().equals(date)) {
                         sum = sum.addValue((Record<Integer>) list.get(i++));
                     }
@@ -133,7 +131,6 @@ public class FitnessDataCollector {
                     result = (T) sum.getValue();
                 }
             }
-        }
 
         return result;
     }
