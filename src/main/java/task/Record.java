@@ -5,7 +5,7 @@ import java.time.LocalDate;
 /**
  * Created by Oleksandr_Khodakovsk on 9/28/2016.
  */
-public class Record <T extends Number>{
+public class Record <T extends Number> {
     private LocalDate date;
     private T value;
 
@@ -18,14 +18,22 @@ public class Record <T extends Number>{
         T val1 = rec1.getValue();
         T val2 = (T) this.getValue();
         if(val1 instanceof Double || val2 instanceof Double) {
-            setValue((T) new Double( val1.doubleValue() +
-                    val2.doubleValue()));
+            Double res = (Double)val1 + (Double)val2;
+            setValue((T) res);
         }
         if(val1 instanceof Integer || val2 instanceof Integer) {
-            setValue((T) new Integer( val1.intValue() +
-                    val2.intValue()));
+            Integer res = (Integer)val1 + (Integer)val2;
+            setValue((T) res);
         }
-        return null;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Record{" +
+                "date=" + date +
+                ", value=" + value +
+                '}';
     }
 
     public LocalDate getDate() {
@@ -43,4 +51,5 @@ public class Record <T extends Number>{
     public void setValue(T value) {
         this.value = value;
     }
+
 }

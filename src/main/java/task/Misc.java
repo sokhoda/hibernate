@@ -12,5 +12,11 @@ public class Misc {
         final DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
                 "dd.MM.yyyy");
         System.out.println(date.format(formatter));
+
+        Double d1 = new Double(0.5);
+        Double d2 = new Double(2.0);
+        System.out.println(d2.compareTo(d1));
+        System.out.println((Integer.valueOf(0)).equals(Double.valueOf(0)));
+//        System.out.println((Integer.valueOf(2) - null));
     }
 }
