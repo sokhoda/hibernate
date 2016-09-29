@@ -1,7 +1,5 @@
 package task;
 
-import org.mockito.cglib.core.Local;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,51 +42,51 @@ public class FitnessDataCollector {
     }
 
     public int restWater(LocalDate date, Integer waterdose) {
-        return waterdose - getSum(date, water);
+        return waterdose - getSum(water, date);
     }
 
     public boolean hasToMuchWater(LocalDate date, Integer waterdose) {
-        return (waterdose - getSum(date, water)) < 0;
+        return (waterdose - getSum(water, date)) < 0;
     }
 
     public boolean hasZeroWater(LocalDate date) {
-        return (Integer.valueOf(0)).equals(getSum(date, water));
+        return (Integer.valueOf(0)).equals(getSum(water, date));
     }
 
     public int restCallories(LocalDate date, Integer calloriesdose) {
-        return calloriesdose - getSum(date, calories);
+        return calloriesdose - getSum(calories, date);
     }
 
     public boolean hasNothingEaten(LocalDate date) {
-        return (Integer.valueOf(0)).equals(getSum(date, calories));
+        return (Integer.valueOf(0)).equals(getSum(calories, date));
     }
 
     public boolean hasOverEaten(LocalDate date, Integer calloriesdose) {
-        return (calloriesdose - getSum(date, calories)) < 0;
+        return (calloriesdose - getSum(calories, date)) < 0;
     }
 
     public int restSteps(LocalDate date, Integer movestepsdose) {
-        return movestepsdose - getSum(date, steps);
+        return movestepsdose - getSum(steps, date);
     }
 
     public boolean hasZeroMoveSteps(LocalDate date) {
-        return (Integer.valueOf(0)).equals(getSum(date, steps));
+        return (Integer.valueOf(0)).equals(getSum(steps, date));
     }
 
     public boolean hasToMuchMoveSteps(LocalDate date, Integer movestepsdose) {
-        return (movestepsdose - getSum(date, steps)) < 0;
+        return (movestepsdose - getSum(steps, date)) < 0;
     }
 
     public double restMoveHours(LocalDate date, Double movetimedose) {
-        return movetimedose - getSum(date, hours);
+        return movetimedose - getSum(hours, date);
     }
 
     public boolean hasZeroMoveHours(LocalDate date) {
-        return (Double.valueOf(0)).equals(getSum(date, hours));
+        return (Double.valueOf(0)).equals(getSum(hours, date));
     }
 
     public boolean hasToMuchMoveHours(LocalDate date, Double movetimedose) {
-        return (getSum(date, hours) - movetimedose) > 0;
+        return (getSum(hours, date) - movetimedose) > 0;
     }
 
     public static <T extends Number> void sort(List<Record<T>> list) {
@@ -102,36 +100,109 @@ public class FitnessDataCollector {
     }
 
 
-    private static <T extends Number> T getSum(LocalDate date, List<Record<T>>
-            list) {
+    private static <T extends Number> T getSum(List<Record<T>> list,
+                                               LocalDate... date) {
         T result = null;
-        if (list == null) {
-            return result;
+        if (list != null) {
+            int lsize = list.size();
+            if (lsize > 0) {
+                sort(list);
+                if (date == null) {
+                    result = getTotalSum(list);
+                }
+                else if (date.length == 1) {
+                    result = getSingleDateSum(list, date[0]);
+                }
+                else {
+                    result = getRangeDateSum(list, date);
+                }
+            }
         }
+        return result;
+    }
+
+    private static <T extends Number> T getRangeDateSum(
+            List<Record<T>> list, LocalDate[] date) {
+        T result = null;
         int lsize = list.size();
-        if (lsize > 0) {
-            sort(list);
-            int i = 0;
-            while (i < lsize && !list.get(i).getDate().equals(date)) {
-                i++;
-            }
+        LocalDate currDate = null;
+        int i = getInxOfDateMatch(list, date[0], lsize);
 
-                if (list.get(0).getValue() instanceof Integer) {
-                    Record<Integer> sum = new Record<>(null, 0);
-                    while (i < lsize && list.get(i).getDate().equals(date)) {
-                        sum = sum.addValue((Record<Integer>) list.get(i++));
-                    }
-                    result = (T) sum.getValue();
-                }
-                else if (list.get(0).getValue() instanceof Double) {
-                    Record<Double> sum = new Record<>(null, 0.);
-                    while (i < lsize && list.get(i).getDate().equals(date)) {
-                        sum = sum.addValue((Record<Double>) list.get(i++));
-                    }
-                    result = (T) sum.getValue();
-                }
+        if (list.get(0).getValue() instanceof Integer) {
+            Record<Integer> sum = new Record<>(null, 0);
+            if (i < lsize) {
+                do {
+                    currDate = list.get(i).getDate();
+                    sum = sum.addValue((Record<Integer>) list.get(i++));
+                } while (i < lsize && date[0].compareTo(currDate) <= 0 &&
+                        date[1].compareTo(currDate) >= 0);
             }
+            result = (T) sum.getValue();
+        }
+        else if (list.get(0).getValue() instanceof Double) {
+            Record<Double> sum = new Record<>(null, 0.);
+            if (i < lsize) {
+                do {
+                    currDate = list.get(i).getDate();
+                    sum = sum.addValue((Record<Double>) list.get(i++));
+                } while (i < lsize && date[0].compareTo(currDate) <= 0 &&
+                        date[1].compareTo(currDate) >= 0);
+            }
+            result = (T) sum.getValue();
+        }
+        return result;
+    }
 
+    private static <T extends Number> T getSingleDateSum(
+            List<Record<T>> list, LocalDate date) {
+        T result = null;
+        int lsize = list.size();
+        int i = getInxOfDateMatch(list, date, lsize);
+
+        if (list.get(0).getValue() instanceof Integer) {
+            Record<Integer> sum = new Record<>(null, 0);
+            while (i < lsize && list.get(i).getDate().equals(date)) {
+                sum = sum.addValue((Record<Integer>) list.get(i++));
+            }
+            result = (T) sum.getValue();
+        }
+        else if (list.get(0).getValue() instanceof Double) {
+            Record<Double> sum = new Record<>(null, 0.);
+            while (i < lsize && list.get(i).getDate().equals(date)) {
+                sum = sum.addValue((Record<Double>) list.get(i++));
+            }
+            result = (T) sum.getValue();
+        }
+        return result;
+    }
+
+    private static <T extends Number> int getInxOfDateMatch(
+            List<Record<T>> list, LocalDate date, int lsize) {
+        int i = 0;
+        while (i < lsize && !list.get(i).getDate().equals(date)) {
+            i++;
+        }
+        return i;
+    }
+
+    private static <T extends Number> T getTotalSum(List<Record<T>> list) {
+        T result = null;
+        int lsize = list.size();
+        int i = 0;
+        if (list.get(0).getValue() instanceof Integer) {
+            Record<Integer> sum = new Record<>(null, 0);
+            while (i < lsize) {
+                sum = sum.addValue((Record<Integer>) list.get(i++));
+            }
+            result = (T) sum.getValue();
+        }
+        else if (list.get(0).getValue() instanceof Double) {
+            Record<Double> sum = new Record<>(null, 0.);
+            while (i < lsize) {
+                sum = sum.addValue((Record<Double>) list.get(i++));
+            }
+            result = (T) sum.getValue();
+        }
         return result;
     }
 

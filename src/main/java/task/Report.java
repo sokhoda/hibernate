@@ -13,10 +13,6 @@ public class Report {
         this.fit = fit;
     }
 
-    public int dayRestWater(LocalDate date, Integer waterdose) {
-        return fit.restWater(date, waterdose);
-    }
-
     public <T extends Number> void printAll(LocalDate date,
                                             List<Record<T>> list) {
         if (list != null) {
@@ -35,4 +31,11 @@ public class Report {
         }
     }
 
+    public int dayRestWater(LocalDate date, Integer waterdose) {
+        return fit.restWater(date, waterdose);
+    }
+
+    public int weekRestWater(LocalDate dateSample1, LocalDate dateSample2, Integer waterdose) {
+        return 0;
+    }
 }

@@ -1,6 +1,6 @@
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
-import org.mockito.cglib.core.Local;
 import task.DoseCollector;
 import task.FitnessDataCollector;
 import task.Report;
@@ -17,7 +17,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ReportTest {
     private final static LocalDate now = LocalDate.now();
     private Report rep;
-    private final static LocalDate dateSample = LocalDate.of(2016, 11, 20);
+    private final static LocalDate dateSample1 = LocalDate.of(2016, 11, 20);
+    private final static LocalDate dateSample2 = LocalDate.of(2016, 11, 26);
 
 
     @Before
@@ -25,11 +26,19 @@ public class ReportTest {
         FitnessDataCollector fit = new FitnessDataCollector();
         TestDataSource.init(fit);
         rep = new Report(fit);
-        rep.printAll(dateSample, fit.getWater());
+        rep.printAll(dateSample1, fit.getWater());
     }
 
     @Test
     public void dayRestWater() throws Exception {
-        assertThat(rep.dayRestWater(dateSample, DoseCollector.WATERDOSE), is(-650));
+        assertThat(rep.dayRestWater(dateSample1, DoseCollector.WATERDOSE), is(-650));
+    }
+
+    @Ignore
+    @Test
+    public void weekRestWater() throws Exception {
+        assertThat(rep.weekRestWater(dateSample1, dateSample2, DoseCollector
+                        .WATERDOSE)
+                , is(-650));
     }
 }
