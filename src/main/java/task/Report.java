@@ -5,12 +5,16 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 /**
  * Created by Oleksandr_Khodakovsk on 9/28/2016.
  */
 public class Report {
-    private final static int digits =2;
+    private final static int digits = 2;
+    private final static BigDecimal HUNDRED = BigDecimal.valueOf(100);
     private FitnessDataCollector fit;
+    private final ReportLogic rl = new ReportLogic();
 
     public Report(FitnessDataCollector fit) {
         this.fit = fit;
@@ -19,7 +23,7 @@ public class Report {
     public <T extends Number> void printAll(LocalDate date,
                                             List<Record<T>> list) {
         if (list != null) {
-            fit.sort(list);
+            rl.sort(list);
             int lsize = list.size();
             int i = 0;
             while (i < lsize && !list.get(i).getDate().equals(date)) {
@@ -34,16 +38,13 @@ public class Report {
         }
     }
 
-    public BigDecimal dayRestWaterPercentage(LocalDate date, Integer waterdose) {
-        BigDecimal bd1 = BigDecimal.valueOf(fit.restWater(date, waterdose)
-                * 100);
-        BigDecimal bd2 = BigDecimal.valueOf(waterdose);
-        return waterdose != 0 ? bd1.divide(bd2, digits, RoundingMode.CEILING)
-                : BigDecimal.ZERO;
+    public BigDecimal restWaterPercentage(Integer waterdose, LocalDate...
+            date ) {
+        BigDecimal bd1 = BigDecimal.valueOf(rl.getSum(fit.getWater(), date));
+        BigDecimal bd2 = BigDecimal.valueOf(waterdose * date.length) ;
+        BigDecimal result = (bd2.subtract(bd1).multiply(HUNDRED)).divide(bd2, digits,
+                RoundingMode.CEILING);
+        return waterdose != 0 ? result : BigDecimal.ZERO;
     }
 
-    public int weekRestWater(LocalDate dateSample1, LocalDate dateSample2, Integer waterdose) {
-
-        return 0;
-    }
 }

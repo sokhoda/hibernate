@@ -40,13 +40,13 @@ public class FitnessDataCollectorTest {
 
     @Test
     public void restWaterMAX() throws Exception {
-        assertThat(fit.restWater(now, DoseCollector.WATERDOSE), is(DoseCollector.WATERDOSE));
+        assertThat(fit.dayRestWater(now, DoseCollector.WATERDOSE), is(DoseCollector.WATERDOSE));
     }
 
     @Test
     public void restWaterZERO() throws Exception {
         fit.drink(now, DoseCollector.WATERDOSE);
-        assertThat(fit.restWater(now, DoseCollector.WATERDOSE), is(0));
+        assertThat(fit.dayRestWater(now, DoseCollector.WATERDOSE), is(0));
     }
 
     @Test

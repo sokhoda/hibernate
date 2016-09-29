@@ -32,15 +32,8 @@ public class ReportTest {
 
     @Test
     public void dayRestWaterPercentage() throws Exception {
-        assertThat(rep.dayRestWaterPercentage(dateSample1, DoseCollector
-                .WATERDOSE), is(BigDecimal.valueOf(-21.66)));
+        assertThat(rep.restWaterPercentage(DoseCollector.WATERDOSE,
+                dateSample1), is(BigDecimal.valueOf(-21.66)));
     }
 
-    @Ignore
-    @Test
-    public void weekRestWater() throws Exception {
-        assertThat(rep.weekRestWater(dateSample1, dateSample2, DoseCollector
-                        .WATERDOSE)
-                , is(-650));
-    }
 }
