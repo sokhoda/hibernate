@@ -1,5 +1,7 @@
 package task;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import java.util.List;
  * Created by Oleksandr_Khodakovsk on 9/28/2016.
  */
 public class Report {
+    private final static int digits =2;
     private FitnessDataCollector fit;
 
     public Report(FitnessDataCollector fit) {
@@ -31,11 +34,16 @@ public class Report {
         }
     }
 
-    public int dayRestWater(LocalDate date, Integer waterdose) {
-        return fit.restWater(date, waterdose);
+    public BigDecimal dayRestWaterPercentage(LocalDate date, Integer waterdose) {
+        BigDecimal bd1 = BigDecimal.valueOf(fit.restWater(date, waterdose)
+                * 100);
+        BigDecimal bd2 = BigDecimal.valueOf(waterdose);
+        return waterdose != 0 ? bd1.divide(bd2, digits, RoundingMode.CEILING)
+                : BigDecimal.ZERO;
     }
 
     public int weekRestWater(LocalDate dateSample1, LocalDate dateSample2, Integer waterdose) {
+
         return 0;
     }
 }

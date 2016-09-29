@@ -6,6 +6,7 @@ import task.FitnessDataCollector;
 import task.Report;
 import task.TestDataSource;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -30,8 +31,9 @@ public class ReportTest {
     }
 
     @Test
-    public void dayRestWater() throws Exception {
-        assertThat(rep.dayRestWater(dateSample1, DoseCollector.WATERDOSE), is(-650));
+    public void dayRestWaterPercentage() throws Exception {
+        assertThat(rep.dayRestWaterPercentage(dateSample1, DoseCollector
+                .WATERDOSE), is(BigDecimal.valueOf(-21.66)));
     }
 
     @Ignore
