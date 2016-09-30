@@ -2,9 +2,6 @@ package domain;
 
 import java.time.LocalDate;
 
-/**
- * Created by Oleksandr_Khodakovsk on 9/28/2016.
- */
 public class Record <T extends Number> {
     private LocalDate date;
     private T value;

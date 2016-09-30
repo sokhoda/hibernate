@@ -11,9 +11,6 @@ import java.time.LocalDate;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-/**
- * Created by Oleksandr_Khodakovsk on 9/28/2016.
- */
 public class ReportTest {
     private final static LocalDate now = LocalDate.now();
     private Report rep;

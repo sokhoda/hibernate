@@ -9,9 +9,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Oleksandr_Khodakovsk on 9/28/2016.
- */
 public class Human {
 
     private final LocalDate now = LocalDate.now();

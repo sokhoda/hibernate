@@ -1,8 +1,5 @@
 package main;
 
-/**
- * Created by s_okhoda on 29.09.2016.
- */
 public class DoseCalculator {
     private int height;
     private int age;

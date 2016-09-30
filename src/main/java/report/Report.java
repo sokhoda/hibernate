@@ -8,10 +8,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-
-/**
- * Created by Oleksandr_Khodakovsk on 9/28/2016.
- */
 public class Report {
     private final static int DIGITS = 2;
     private Human fitData;

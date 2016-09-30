@@ -4,9 +4,6 @@ import domain.Human;
 
 import java.time.LocalDate;
 
-/**
- * Created by s_okhoda on 29.09.2016.
- */
 public class TestDataSource {
     private static Human fitnessData;
 

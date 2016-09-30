@@ -11,9 +11,6 @@ import java.util.List;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
-/**
- * Created by Oleksandr_Khodakovsk on 9/29/2016.
- */
 public class ReportLogic {
     private int digits;
     private final static BigDecimal HUNDRED = BigDecimal.valueOf(100);
