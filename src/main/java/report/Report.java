@@ -1,8 +1,8 @@
-package main.report;
+package report;
 
 import domain.Record;
 import main.DoseCalculator;
-import main.Human;
+import domain.Human;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package main.report;
+package report;
 
 import domain.Record;
 

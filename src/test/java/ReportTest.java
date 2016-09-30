@@ -1,8 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
 import main.DoseCalculator;
-import main.Human;
-import main.report.Report;
+import domain.Human;
+import report.Report;
 import testdatasource.TestDataSource;
 
 import java.math.BigDecimal;

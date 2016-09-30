@@ -1,6 +1,6 @@
 package testdatasource;
 
-import main.Human;
+import domain.Human;
 
 import java.time.LocalDate;
 

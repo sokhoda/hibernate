@@ -1,8 +1,8 @@
-import main.report.Report;
+import report.Report;
 import org.junit.Before;
 import org.junit.Test;
 import main.DoseCalculator;
-import main.Human;
+import domain.Human;
 import testdatasource.TestDataSource;
 
 import java.time.LocalDate;

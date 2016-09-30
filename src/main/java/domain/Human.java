@@ -1,8 +1,9 @@
-package main;
+package domain;
 
 import domain.Record;
-import main.report.Report;
-import main.report.ReportLogic;
+import main.DoseCalculator;
+import report.Report;
+import report.ReportLogic;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
