@@ -1,6 +1,7 @@
 package main;
 
 import domain.Record;
+import main.report.Report;
 import main.report.ReportLogic;
 
 import java.time.LocalDate;
@@ -17,13 +18,13 @@ public class FitnessDataCollector {
     private final List<Record<Integer>> calories = new ArrayList<>();
     private final List<Record<Double>> hours = new ArrayList<>();
     private final List<Record<Integer>> steps = new ArrayList<>();
-    private final ReportLogic rl = new ReportLogic();
+    private final ReportLogic rl = new ReportLogic(Report.getDigits());
 
     public FitnessDataCollector() {
         init();
     }
 
-    public void init() {
+    private void init() {
         water.add(new Record<>(LocalDate.MIN, 0));
         calories.add(new Record<>(LocalDate.MIN, 0));
         hours.add(new Record<>(LocalDate.MIN, 0.));

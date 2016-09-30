@@ -3,15 +3,44 @@ package main.report;
 import domain.Record;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+
 /**
  * Created by Oleksandr_Khodakovsk on 9/29/2016.
  */
 public class ReportLogic {
+    private int digits;
+    private final static BigDecimal HUNDRED = BigDecimal.valueOf(100);
+
+    public ReportLogic(int digits) {
+        this.digits = digits;
+    }
+
+    public <T extends Number> BigDecimal  calcConsumpPercentage(T doseIn,
+                             List<Record<T>> list, LocalDate[] date) {
+        BigDecimal bd1 = null;
+        BigDecimal bd2 = null;
+        LocalDate endDate = date.length > 1 ? date[1] : date[0];
+        if (list.get(0).getValue() instanceof Integer){
+            bd1 = BigDecimal.valueOf((Integer)getSum(list, date));
+            bd2 = BigDecimal.valueOf((Integer)doseIn * (date[0].until(endDate,
+                    DAYS) + 1));
+        }
+        if (list.get(0).getValue() instanceof Double){
+            bd1 = BigDecimal.valueOf((Double) getSum(list, date));
+            bd2 = BigDecimal.valueOf((Double)doseIn * (date[0].until(endDate,
+                    DAYS) + 1));
+        }
+        BigDecimal result = (bd1.multiply(HUNDRED)).divide(bd2, digits,
+                RoundingMode.CEILING);
+        return !doseIn.equals(0) ? result : BigDecimal.ZERO;
+    }
 
     public <T extends Number> void sortByDate(List<Record<T>> list) {
         Collections.sort(list, new Comparator<Record<T>>() {
@@ -43,6 +72,7 @@ public class ReportLogic {
     public <T extends Number> BigDecimal getMedian(List<Record<T>> list,
                                                    LocalDate... date) {
         BigDecimal result = BigDecimal.ZERO;
+
         if (list != null) {
             sortByDate(list);
             int lsize = list.size();

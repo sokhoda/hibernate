@@ -1,59 +1,73 @@
 package main.report;
 
+import domain.Record;
+import main.DoseCalculator;
 import main.FitnessDataCollector;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDate;
-
-import static java.time.temporal.ChronoUnit.DAYS;
+import java.util.List;
 
 
 /**
  * Created by Oleksandr_Khodakovsk on 9/28/2016.
  */
 public class Report {
-    private final static int digits = 2;
+    private final static int DIGITS = 2;
+    private FitnessDataCollector fitData;
+    private DoseCalculator dc;
+    private final ReportLogic rl = new ReportLogic(DIGITS);
 
-    private final static BigDecimal HUNDRED = BigDecimal.valueOf(100);
-    private FitnessDataCollector fit;
-    private final ReportLogic rl = new ReportLogic();
-    public Report(FitnessDataCollector fit) {
-        this.fit = fit;
+    public Report(FitnessDataCollector fitData, DoseCalculator dc) {
+        this.fitData = fitData;
+        this.dc = dc;
     }
 
-    public BigDecimal waterConsumptionPercentage(Integer waterdose, LocalDate...
-            date) {
-        BigDecimal bd1 = BigDecimal.valueOf(rl.getSum(fit.getWater(), date));
-        LocalDate endDate = date.length > 1 ? date[1] : date[0];
-        BigDecimal bd2 = BigDecimal.valueOf(waterdose * (date[0].until
-                (endDate, DAYS) + 1));
-        BigDecimal result = (bd1.multiply(HUNDRED)).divide(bd2, digits,
-                RoundingMode.CEILING);
-        return waterdose != 0 ? result : BigDecimal.ZERO;
+    public BigDecimal calcWaterConsumpPercent(LocalDate... date) {
+        Integer dose = dc.getWater();
+        List<Record<Integer>> list = fitData.getWater();
+        return rl.calcConsumpPercentage(dose, list, date);
     }
 
-
-    public ReportLogic getRl() {
-        return rl;
+    public BigDecimal calcWaterConsumpMedian(LocalDate... date) {
+        return rl.getMedian(fitData.getWater(), date);
     }
 
-    public BigDecimal waterConsumptionMedian(Integer waterdose, LocalDate...date) {
-        return rl.getMedian(fit.getWater(), date);
+    public BigDecimal calcFoodConsumpPercent(LocalDate... date) {
+        Integer dose = dc.getCalories();
+        List<Record<Integer>> list = fitData.getCalories();
+        return rl.calcConsumpPercentage(dose, list, date);
     }
 
-    public BigDecimal foodConsumptionPercentage(Integer callories, LocalDate
-            ... date) {
-        BigDecimal bd1 = BigDecimal.valueOf(rl.getSum(fit.getCalories(), date));
-        LocalDate endDate = date.length > 1 ? date[1] : date[0];
-        BigDecimal bd2 = BigDecimal.valueOf(callories * (date[0].until
-                (endDate, DAYS) + 1));
-        BigDecimal result = (bd1.multiply(HUNDRED)).divide(bd2, digits,
-                RoundingMode.CEILING);
-        return callories != 0 ? result : BigDecimal.ZERO;
+    public BigDecimal calcFoodConsumpMedian(LocalDate... date) {
+        return rl.getMedian(fitData.getCalories(), date);
+    }
+
+    public BigDecimal calcStepsPercent(LocalDate... date) {
+        Integer dose = dc.getSteps();
+        List<Record<Integer>> list = fitData.getSteps();
+        return rl.calcConsumpPercentage(dose, list, date);
+    }
+
+    public BigDecimal calcStepsMedian(LocalDate... date) {
+        return rl.getMedian(fitData.getSteps(), date);
+    }
+
+    public BigDecimal calcHoursPercent(LocalDate... date) {
+        Double dose = dc.getHours();
+        List<Record<Double>> list = fitData.getHours();
+        return rl.calcConsumpPercentage(dose, list, date);
+    }
+
+    public BigDecimal calcHoursMedian(LocalDate... date) {
+        return rl.getMedian(fitData.getHours(), date);
     }
 
     public static int getDigits() {
-        return digits;
+        return DIGITS;
+    }
+
+    public ReportLogic getRl() {
+        return rl;
     }
 }

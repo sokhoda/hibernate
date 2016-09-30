@@ -8,9 +8,9 @@ public class DoseCalculator {
     private int age;
     private int sex;
     private Integer water;
-    private Integer callories;
-    private Double movetime = 2.;
-    private Integer movesteps = 2000;
+    private Integer calories;
+    private Double hours;
+    private Integer steps;
 
     public DoseCalculator() {
        calcDose();
@@ -25,24 +25,24 @@ public class DoseCalculator {
 
     private void calcDose() {
         water = 3000;
-        callories = 2500;
-        movetime = 2.;
-        movesteps = 2000;
+        calories = 2500;
+        hours = 2.;
+        steps = 2000;
     }
 
     public Integer getWater(){
         return water;
     }
 
-    public Integer getCallories() {
-        return callories;
+    public Integer getCalories() {
+        return calories;
     }
 
-    public Double getMovetime() {
-        return movetime;
+    public Double getHours() {
+        return hours;
     }
 
-    public Integer getMovesteps() {
-        return movesteps;
+    public Integer getSteps() {
+        return steps;
     }
 }
