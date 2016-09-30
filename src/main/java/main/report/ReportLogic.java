@@ -1,4 +1,6 @@
-package task;
+package main.report;
+
+import domain.Record;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -46,7 +48,8 @@ public class ReportLogic {
             int lsize = list.size();
             if (lsize > 0) {
                 int startInx = getFirstInxOfDateMatch(list, date[0], lsize);
-                int endInx = getLastInxOfDateMatch(list, date[1], lsize);
+                LocalDate endDate = date.length > 1 ? date[1] : date[0];
+                int endInx = getLastInxOfDateMatch(list, endDate, lsize);
                 if (startInx > -1) {
                     endInx = endInx != -1 ? endInx : lsize - 1;
                     int rangeSize = endInx - startInx + 1;

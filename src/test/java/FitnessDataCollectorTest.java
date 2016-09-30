@@ -1,8 +1,8 @@
 import org.junit.Before;
 import org.junit.Test;
-import task.DoseCollector;
-import task.FitnessDataCollector;
-import task.TestDataSource;
+import main.DoseCalculator;
+import main.FitnessDataCollector;
+import testdatasource.TestDataSource;
 
 import java.time.LocalDate;
 
@@ -14,6 +14,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class FitnessDataCollectorTest {
     private final LocalDate now = LocalDate.now();
+    private DoseCalculator dc;
     private FitnessDataCollector fit;
 
 
@@ -21,6 +22,7 @@ public class FitnessDataCollectorTest {
     public void setUp() throws Exception {
         fit = new FitnessDataCollector();
         TestDataSource.init(fit);
+        dc = new DoseCalculator();
     }
 
     @Test
@@ -40,19 +42,19 @@ public class FitnessDataCollectorTest {
 
     @Test
     public void restWaterMAX() throws Exception {
-        assertThat(fit.dayRestWater(now, DoseCollector.WATERDOSE), is(DoseCollector.WATERDOSE));
+        assertThat(fit.dayRestWater(now, dc.getWater()), is(dc.getWater()));
     }
 
     @Test
     public void restWaterZERO() throws Exception {
-        fit.drink(now, DoseCollector.WATERDOSE);
-        assertThat(fit.dayRestWater(now, DoseCollector.WATERDOSE), is(0));
+        fit.drink(now, dc.getWater());
+        assertThat(fit.dayRestWater(now, dc.getWater()), is(0));
     }
 
     @Test
     public void toMuchWater() throws Exception {
         fit.drink(now, 10000);
-        assertThat(fit.hasToMuchWater(now, DoseCollector.WATERDOSE), is(true));
+        assertThat(fit.hasToMuchWater(now, dc.getWater()), is(true));
     }
 
     @Test
@@ -62,19 +64,19 @@ public class FitnessDataCollectorTest {
 
     @Test
     public void restStepsZERO() throws Exception {
-        fit.move(now, 0.5, DoseCollector.MOVESTEPSDOSE);
-        assertThat(fit.restSteps(now, DoseCollector.MOVESTEPSDOSE), is(0));
+        fit.move(now, 0.5, dc.getMovesteps());
+        assertThat(fit.restSteps(now, dc.getMovesteps()), is(0));
     }
 
     @Test
     public void restStepsMAX() throws Exception {
-        assertThat(fit.restSteps(now, DoseCollector.MOVESTEPSDOSE), is(DoseCollector.MOVESTEPSDOSE));
+        assertThat(fit.restSteps(now, dc.getMovesteps()), is(dc.getMovesteps()));
     }
 
     @Test
     public void toMuchMoveSteps() throws Exception {
         fit.move(now, 1, 11000);
-        assertThat(fit.hasToMuchMoveSteps(now, DoseCollector.MOVESTEPSDOSE), is(true));
+        assertThat(fit.hasToMuchMoveSteps(now, dc.getMovesteps()), is(true));
     }
 
     @Test
@@ -84,13 +86,13 @@ public class FitnessDataCollectorTest {
 
     @Test
     public void restMoveHoursMAX() throws Exception {
-        assertThat(fit.restMoveHours(now, DoseCollector.MOVETIMEDOSE), is(DoseCollector.MOVETIMEDOSE));
+        assertThat(fit.restMoveHours(now, dc.getMovetime()), is(dc.getMovetime()));
     }
 
     @Test
     public void restMoveHoursZERO() throws Exception {
-        fit.move(now, DoseCollector.MOVETIMEDOSE, 12);
-        assertThat(fit.restMoveHours(now, DoseCollector.MOVETIMEDOSE), is(0.));
+        fit.move(now, dc.getMovetime(), 12);
+        assertThat(fit.restMoveHours(now, dc.getMovetime()), is(0.));
     }
 
     @Test
@@ -101,18 +103,18 @@ public class FitnessDataCollectorTest {
     @Test
     public void toMuchMoveHours() throws Exception {
         fit.move(now, 4, 2);
-        assertThat(fit.hasToMuchMoveHours(now, DoseCollector.MOVETIMEDOSE), is(true));
+        assertThat(fit.hasToMuchMoveHours(now, dc.getMovetime()), is(true));
     }
 
     @Test
     public void restCaloriesMAX() throws Exception {
-        assertThat(fit.restCallories(now, DoseCollector.CALLORIESDOSE), is(DoseCollector.CALLORIESDOSE));
+        assertThat(fit.restCallories(now, dc.getCallories()), is(dc.getCallories()));
     }
 
     @Test
     public void restCaloriesZERO() throws Exception {
-        fit.eat(now, DoseCollector.CALLORIESDOSE);
-        assertThat(fit.restCallories(now, DoseCollector.CALLORIESDOSE), is(0));
+        fit.eat(now, dc.getCallories());
+        assertThat(fit.restCallories(now, dc.getCallories()), is(0));
     }
 
     @Test
@@ -123,7 +125,7 @@ public class FitnessDataCollectorTest {
     @Test
     public void overeatenTest() throws Exception {
         fit.eat(now, 5000);
-        assertThat(fit.hasOverEaten(now, DoseCollector.CALLORIESDOSE), is(true));
+        assertThat(fit.hasOverEaten(now, dc.getCallories()), is(true));
     }
 
 

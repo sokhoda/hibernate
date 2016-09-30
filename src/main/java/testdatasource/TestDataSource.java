@@ -1,4 +1,6 @@
-package task;
+package testdatasource;
+
+import main.FitnessDataCollector;
 
 import java.time.LocalDate;
 
