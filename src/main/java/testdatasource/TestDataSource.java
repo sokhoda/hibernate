@@ -1,6 +1,6 @@
 package testdatasource;
 
-import main.FitnessDataCollector;
+import main.Human;
 
 import java.time.LocalDate;
 
@@ -8,9 +8,9 @@ import java.time.LocalDate;
  * Created by s_okhoda on 29.09.2016.
  */
 public class TestDataSource {
-    private static FitnessDataCollector fitnessData;
+    private static Human fitnessData;
 
-    public static void init(FitnessDataCollector fit) {
+    public static void init(Human fit) {
         if (fit != null) {
             TestDataSource.fitnessData = fit;
             waterDataInit();

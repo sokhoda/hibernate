@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by Oleksandr_Khodakovsk on 9/28/2016.
  */
-public class FitnessDataCollector {
+public class Human {
 
     private final LocalDate now = LocalDate.now();
     private final List<Record<Integer>> water = new ArrayList<>();
@@ -19,9 +19,11 @@ public class FitnessDataCollector {
     private final List<Record<Double>> hours = new ArrayList<>();
     private final List<Record<Integer>> steps = new ArrayList<>();
     private final ReportLogic rl = new ReportLogic(Report.getDigits());
+    private DoseCalculator dc;
 
-    public FitnessDataCollector() {
+    public Human() {
         init();
+        dc = new DoseCalculator();
     }
 
     private void init() {
@@ -44,56 +46,37 @@ public class FitnessDataCollector {
         this.steps.add(new Record<Integer>(date, steps));
     }
 
-    public int dayRestWater(LocalDate date, Integer waterdose) {
-        return waterdose - rl.getSum(water, date);
-    }
 
-    public boolean hasToMuchWater(LocalDate date, Integer waterdose) {
-        return (waterdose - rl.getSum(water, date)) < 0;
-    }
-
-    public boolean hasZeroWater(LocalDate date) {
+    public boolean dayZeroWater(LocalDate date) {
         return (Integer.valueOf(0)).equals(rl.getSum(water, date));
     }
 
-    public int restCallories(LocalDate date, Integer calloriesdose) {
-        return calloriesdose - rl.getSum(calories, date);
-    }
-
-    public boolean hasNothingEaten(LocalDate date) {
-        return (Integer.valueOf(0)).equals(rl.getSum(calories, date));
-    }
-
-    public boolean hasOverEaten(LocalDate date, Integer calloriesdose) {
-        return (calloriesdose - rl.getSum(calories, date)) < 0;
-    }
-
-    public int restSteps(LocalDate date, Integer movestepsdose) {
-        return movestepsdose - rl.getSum(steps, date);
-    }
-
-    public boolean hasZeroMoveSteps(LocalDate date) {
+    public boolean dayZeroSteps(LocalDate date) {
         return (Integer.valueOf(0)).equals(rl.getSum(steps, date));
     }
 
-    public boolean hasToMuchMoveSteps(LocalDate date, Integer movestepsdose) {
-        return (movestepsdose - rl.getSum(steps, date)) < 0;
-    }
-
-    public double restMoveHours(LocalDate date, Double movetimedose) {
-        return movetimedose - rl.getSum(hours, date);
-    }
-
-    public boolean hasZeroMoveHours(LocalDate date) {
+    public boolean dayZeroHours(LocalDate date) {
         return (Double.valueOf(0)).equals(rl.getSum(hours, date));
     }
 
-    public boolean hasToMuchMoveHours(LocalDate date, Double movetimedose) {
-        return (rl.getSum(hours, date) - movetimedose) > 0;
+    public boolean dayZeroCalories(LocalDate date) {
+        return (Integer.valueOf(0)).equals(rl.getSum(calories, date));
     }
 
-    public LocalDate getNow() {
-        return now;
+    public boolean dayTooMuchWater(LocalDate date) {
+        return (rl.getSum(water, date) - dc.getWater()) > 0;
+    }
+
+    public boolean dayTooMuchCalories(LocalDate date) {
+        return (rl.getSum(calories, date) - dc.getCalories()) > 0;
+    }
+
+    public boolean dayTooMuchSteps(LocalDate date) {
+        return (rl.getSum(steps, date) - dc.getSteps()) > 0;
+    }
+
+    public boolean dayTooMuchHours(LocalDate date) {
+        return (rl.getSum(hours, date) - dc.getHours()) > 0;
     }
 
     public List<Record<Integer>> getWater() {

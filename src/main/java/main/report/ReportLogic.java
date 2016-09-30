@@ -22,24 +22,24 @@ public class ReportLogic {
         this.digits = digits;
     }
 
-    public <T extends Number> BigDecimal  calcConsumpPercentage(T doseIn,
+    public <T extends Number> BigDecimal  calcConsumpPercentage(T dose,
                              List<Record<T>> list, LocalDate[] date) {
         BigDecimal bd1 = null;
         BigDecimal bd2 = null;
         LocalDate endDate = date.length > 1 ? date[1] : date[0];
         if (list.get(0).getValue() instanceof Integer){
             bd1 = BigDecimal.valueOf((Integer)getSum(list, date));
-            bd2 = BigDecimal.valueOf((Integer)doseIn * (date[0].until(endDate,
+            bd2 = BigDecimal.valueOf((Integer)dose * (date[0].until(endDate,
                     DAYS) + 1));
         }
         if (list.get(0).getValue() instanceof Double){
             bd1 = BigDecimal.valueOf((Double) getSum(list, date));
-            bd2 = BigDecimal.valueOf((Double)doseIn * (date[0].until(endDate,
+            bd2 = BigDecimal.valueOf((Double)dose * (date[0].until(endDate,
                     DAYS) + 1));
         }
         BigDecimal result = (bd1.multiply(HUNDRED)).divide(bd2, digits,
                 RoundingMode.CEILING);
-        return !doseIn.equals(0) ? result : BigDecimal.ZERO;
+        return !dose.equals(0) ? result : BigDecimal.ZERO;
     }
 
     public <T extends Number> void sortByDate(List<Record<T>> list) {

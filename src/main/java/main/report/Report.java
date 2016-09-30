@@ -2,7 +2,7 @@ package main.report;
 
 import domain.Record;
 import main.DoseCalculator;
-import main.FitnessDataCollector;
+import main.Human;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,14 +14,36 @@ import java.util.List;
  */
 public class Report {
     private final static int DIGITS = 2;
-    private FitnessDataCollector fitData;
+    private Human fitData;
     private DoseCalculator dc;
     private final ReportLogic rl = new ReportLogic(DIGITS);
 
-    public Report(FitnessDataCollector fitData, DoseCalculator dc) {
+    public Report(Human fitData, DoseCalculator dc) {
         this.fitData = fitData;
         this.dc = dc;
     }
+
+    public BigDecimal dayRestWater(LocalDate date) {
+        return BigDecimal.valueOf(
+                dc.getWater() - rl.getSum(fitData.getWater(), date));
+    }
+
+    public BigDecimal dayRestCalories(LocalDate date) {
+        return BigDecimal.valueOf(
+                dc.getCalories() - rl.getSum(fitData.getCalories(), date));
+    }
+
+    public BigDecimal dayRestSteps(LocalDate date) {
+        return BigDecimal.valueOf(
+                dc.getSteps() - rl.getSum(fitData.getSteps(), date));
+    }
+
+    public BigDecimal dayRestHours(LocalDate date) {
+        return BigDecimal.valueOf(
+                dc.getHours() - rl.getSum(fitData.getHours(), date));
+    }
+
+
 
     public BigDecimal calcWaterConsumpPercent(LocalDate... date) {
         Integer dose = dc.getWater();

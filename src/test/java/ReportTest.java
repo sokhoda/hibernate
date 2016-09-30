@@ -1,7 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 import main.DoseCalculator;
-import main.FitnessDataCollector;
+import main.Human;
 import main.report.Report;
 import testdatasource.TestDataSource;
 
@@ -17,17 +17,65 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class ReportTest {
     private final static LocalDate now = LocalDate.now();
     private Report rep;
-    private FitnessDataCollector fit;
+    private Human fit;
+    private DoseCalculator dc;
     private final static LocalDate dateSample1 = LocalDate.of(2016, 11, 20);
     private final static LocalDate dateSample2 = LocalDate.of(2016, 11, 26);
 
 
     @Before
     public void setUp() throws Exception {
-        fit = new FitnessDataCollector();
+        fit = new Human();
         TestDataSource.init(fit);
-        rep = new Report(fit, new DoseCalculator());
+        dc = new DoseCalculator();
+        rep = new Report(fit, dc);
+    }
 
+    @Test
+    public void dayRestHoursZERO() throws Exception {
+        fit.move(now, dc.getHours(), 12);
+        assertThat(rep.dayRestHours(now), is(new BigDecimal("0.0")));
+    }
+
+    @Test
+    public void dayRestWaterZERO() throws Exception {
+        fit.drink(now, dc.getWater());
+        assertThat(rep.dayRestWater(now), is(BigDecimal.ZERO));
+    }
+
+    @Test
+    public void dayRestCaloriesZERO() throws Exception {
+        fit.eat(now, dc.getCalories());
+        assertThat(rep.dayRestCalories(now), is(BigDecimal.ZERO));
+    }
+
+    @Test
+    public void dayRestStepsZERO() throws Exception {
+        fit.move(now, 0.5, dc.getSteps());
+        assertThat(rep.dayRestSteps(now), is(BigDecimal.ZERO));
+    }
+
+    @Test
+    public void dayRestStepsMAX() throws Exception {
+        assertThat(rep.dayRestSteps(now), is(BigDecimal.valueOf(dc.getSteps()
+        )));
+    }
+
+    @Test
+    public void dayRestHoursMAX() throws Exception {
+        assertThat(rep.dayRestHours(now), is(BigDecimal.valueOf(dc.getHours()
+        )));
+    }
+
+    @Test
+    public void dayRestWaterMAX() throws Exception {
+        assertThat(rep.dayRestWater(now), is(BigDecimal.valueOf(dc.getWater())));
+    }
+
+    @Test
+    public void dayRestCaloriesMAX() throws Exception {
+        assertThat(rep.dayRestCalories(now), is(
+                BigDecimal.valueOf(dc.getCalories())));
     }
 
     @Test
