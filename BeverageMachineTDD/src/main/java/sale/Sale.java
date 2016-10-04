@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by Oleksandr_Khodakovsk on 9/26/2016.
- */
 public class Sale implements ISale {
     private List<SalesLineItem> lineItemList = new ArrayList<>();
     private Payment payment;

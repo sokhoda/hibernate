@@ -3,14 +3,10 @@ import org.junit.Test;
 import product.Coffee;
 import product.Juice;
 import sale.Sale;
-import sale.SalesLineItem;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-/**
- * Created by s_okhoda on 05.10.2016.
- */
 public class SaleTest {
     private Sale sale;
 

@@ -2,9 +2,6 @@ package payments;
 
 import java.util.*;
 
-/**
- * Created by Oleksandr_Khodakovsk on 9/27/2016.
- */
 public class Payment implements IPayment {
     private final Set<Integer> allowedCoins = new HashSet<>();
     private int sumDue;

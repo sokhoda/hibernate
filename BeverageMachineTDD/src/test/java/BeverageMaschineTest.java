@@ -11,9 +11,6 @@ import java.util.Arrays;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-/**
- * Created by Oleksandr_Khodakovsk on 10/3/2016.
- */
 public class BeverageMaschineTest {
     private BeverageMachine bm;
     private Sale sale;
