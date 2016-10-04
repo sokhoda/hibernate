@@ -6,7 +6,7 @@ import product.Product;
 /**
  * Created by Oleksandr_Khodakovsk on 9/26/2016.
  */
-public class SalesLineItem{
+public class SalesLineItem {
     private int quantity;
     private Product product;
 
@@ -16,10 +16,10 @@ public class SalesLineItem{
     }
 
     public String getInfo() {
-        return product.getName() + "x" + quantity + "\n";
+        return product.getName() + " x " + quantity + "\n";
     }
 
-    public int subtotal(){
-        return product.getPrice()*quantity;
+    public int subtotal() {
+        return product.getPrice() * quantity;
     }
 }

@@ -1,6 +1,5 @@
 package sale;
 
-import interfaces.ISale;
 import payments.Payment;
 import product.Product;
 
@@ -22,33 +21,6 @@ public class Sale implements ISale {
     }
 
     @Override
-    public String makePayment() {
-        String message ="";
-        payment = new Payment(getTotal());
-        date = new Date();
-        payment.create();
-        if (!payment.isCanceled()) {
-            message = getFinalGreeting();
-        }
-        else {
-            payment = null;
-        }
-        return message;
-    }
-
-    @Override
-    public String getFinalGreeting() {
-        StringBuilder sb = new StringBuilder();
-
-        sb.append("Payment successful!!\n Please take your order");
-        int change = payment.getSumPaid() - payment.getSumDue();
-        if (change > 0) {
-            sb.append(" and a change=" + change);
-        }
-        return sb.toString();
-    }
-
-    @Override
     public String getSaleInfo() {
         StringBuilder sb = new StringBuilder();
         for (SalesLineItem item : lineItemList) {
@@ -58,7 +30,7 @@ public class Sale implements ISale {
     }
 
     @Override
-    public int getTotal() {
+    public Integer getTotal() {
         int sum = 0;
         for (SalesLineItem item : lineItemList) {
             sum += item.subtotal();

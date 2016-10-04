@@ -1,4 +1,4 @@
-package interfaces;
+package sale;
 
 
 import product.Product;
@@ -9,11 +9,8 @@ import product.Product;
 public interface ISale {
     void makeLineItem(Product product, int quantity);
 
-    String makePayment();
-
-    String getFinalGreeting();
 
     String getSaleInfo();
 
-    int getTotal();
+    Integer getTotal();
 }
