@@ -1,0 +1,10 @@
+TASK1:
+mvn exec:java  -Dexec.args=" 55 female"
+
+mvn exec:java  -Dexec.args=" 55 female" -f Selezniow/pom.xml
+
+mvn exec:java  -Dexec.args="'argument separated with space' 'another one'"
+
+TASK2:
+mvn clean test -P withoutITests
+mvn clean test -P onlyITest
