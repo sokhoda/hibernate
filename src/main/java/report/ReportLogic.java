@@ -161,7 +161,7 @@ public class ReportLogic {
         int i = getFirstInxOfDateMatch(list, date[0], lsize);
         if (i > -1) {
             if (list.get(0).getValue() instanceof Integer) {
-                Record<Integer> sum = new Record<>(null, 0);
+                Record<Integer> sum = new Record<Integer>(null, 0);
                 if (i < lsize) {
                     do {
                         currDate = list.get(i).getDate();
@@ -170,7 +170,7 @@ public class ReportLogic {
                 }
             }
             else if (list.get(0).getValue() instanceof Double) {
-                Record<Double> sum = new Record<>(null, 0.);
+                Record<Double> sum = new Record<Double>(null, 0.);
                 if (i < lsize) {
                     do {
                         currDate = list.get(i).getDate();
@@ -246,7 +246,7 @@ public class ReportLogic {
         int i = getFirstInxOfDateMatch(list, date[0], lsize);
         if (i > -1) {
             if (list.get(0).getValue() instanceof Integer) {
-                Record<Integer> sum = new Record<>(null, 0);
+                Record<Integer> sum = new Record<Integer>(null, 0);
                 if (i < lsize) {
                     do {
                         currDate = list.get(i).getDate();
@@ -256,7 +256,7 @@ public class ReportLogic {
                 result = (T) sum.getValue();
             }
             else if (list.get(0).getValue() instanceof Double) {
-                Record<Double> sum = new Record<>(null, 0.);
+                Record<Double> sum = new Record<Double>(null, 0.);
                 if (i < lsize) {
                     do {
                         currDate = list.get(i).getDate();
@@ -276,14 +276,14 @@ public class ReportLogic {
         int i = getFirstInxOfDateMatch(list, date, lsize);
 
         if (list.get(0).getValue() instanceof Integer) {
-            Record<Integer> sum = new Record<>(null, 0);
+            Record<Integer> sum = new Record<Integer>(null, 0);
             while (i < lsize && list.get(i).getDate().equals(date)) {
                 sum = sum.addValue((Record<Integer>) list.get(i++));
             }
             result = (T) sum.getValue();
         }
         else if (list.get(0).getValue() instanceof Double) {
-            Record<Double> sum = new Record<>(null, 0.);
+            Record<Double> sum = new Record<Double>(null, 0.);
             while (i < lsize && list.get(i).getDate().equals(date)) {
                 sum = sum.addValue((Record<Double>) list.get(i++));
             }
@@ -324,14 +324,14 @@ public class ReportLogic {
         int lsize = list.size();
         int i = 0;
         if (list.get(0).getValue() instanceof Integer) {
-            Record<Integer> sum = new Record<>(null, 0);
+            Record<Integer> sum = new Record<Integer>(null, 0);
             while (i < lsize) {
                 sum = sum.addValue((Record<Integer>) list.get(i++));
             }
             result = (T) sum.getValue();
         }
         else if (list.get(0).getValue() instanceof Double) {
-            Record<Double> sum = new Record<>(null, 0.);
+            Record<Double> sum = new Record<Double>(null, 0.);
             while (i < lsize) {
                 sum = sum.addValue((Record<Double>) list.get(i++));
             }

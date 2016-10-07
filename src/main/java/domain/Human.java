@@ -11,10 +11,10 @@ import java.util.List;
 public class Human {
 
     private final LocalDate now = LocalDate.now();
-    private final List<Record<Integer>> water = new ArrayList<>();
-    private final List<Record<Integer>> calories = new ArrayList<>();
-    private final List<Record<Double>> hours = new ArrayList<>();
-    private final List<Record<Integer>> steps = new ArrayList<>();
+    private final List<Record<Integer>> water = new ArrayList<Record<Integer>>();
+    private final List<Record<Integer>> calories = new ArrayList<Record<Integer>>();
+    private final List<Record<Double>> hours = new ArrayList<Record<Double>>();
+    private final List<Record<Integer>> steps = new ArrayList<Record<Integer>>();
     private final ReportLogic rl = new ReportLogic(Report.getDigits());
     private DoseCalculator dc;
 
@@ -24,10 +24,10 @@ public class Human {
     }
 
     private void init() {
-        water.add(new Record<>(LocalDate.MIN, 0));
-        calories.add(new Record<>(LocalDate.MIN, 0));
-        hours.add(new Record<>(LocalDate.MIN, 0.));
-        steps.add(new Record<>(LocalDate.MIN, 0));
+        water.add(new Record<Integer>(LocalDate.MIN, 0));
+        calories.add(new Record<Integer>(LocalDate.MIN, 0));
+        hours.add(new Record<Double>(LocalDate.MIN, 0.));
+        steps.add(new Record<Integer>(LocalDate.MIN, 0));
     }
 
     public void drink(LocalDate date, int volume) {

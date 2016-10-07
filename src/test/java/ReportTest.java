@@ -77,111 +77,94 @@ public class ReportTest {
 
     @Test
     public void dayWaterConsumpPercent() throws Exception {
-        rep.getRl().printList(fit.getWater(), dateSample1);
         assertThat(rep.calcWaterConsumpPercent(dateSample1),
                 is(BigDecimal.valueOf(121.67)));
     }
 
     @Test
     public void weekWaterConsumpPercent() throws Exception {
-        rep.getRl().printList(fit.getWater(), dateSample1, dateSample2);
         assertThat(rep.calcWaterConsumpPercent(dateSample1, dateSample2),
                 is(BigDecimal.valueOf(63.34)));
     }
 
     @Test
     public void weekWaterConsumpMedian() throws Exception {
-        rep.getRl().printList(fit.getWater(), dateSample1, dateSample2);
         assertThat(rep.calcWaterConsumpMedian(dateSample1, dateSample2),
                 is(BigDecimal.valueOf(300)));
     }
 
     @Test
     public void dayWaterConsumpMedian() throws Exception {
-        rep.getRl().printList(fit.getWater(), dateSample1);
         assertThat(rep.calcWaterConsumpMedian(dateSample1), is(BigDecimal.valueOf(250)));
     }
 
     @Test
     public void dayFoodConsumpPercent() throws Exception {
-        rep.getRl().printList(fit.getCalories(), dateSample1);
         assertThat(rep.calcFoodConsumpPercent(dateSample1), is(new
                 BigDecimal("110.00")));
     }
 
     @Test
     public void weekFoodConsumpPercent() throws Exception {
-        rep.getRl().printList(fit.getCalories(), dateSample1, dateSample2);
         assertThat(rep.calcFoodConsumpPercent(dateSample1, dateSample2),
                 is(BigDecimal.valueOf(66.86)));
     }
 
     @Test
     public void weekFoodConsumpMedian() throws Exception {
-        rep.getRl().printList(fit.getCalories(), dateSample1, dateSample2);
         assertThat(rep.calcFoodConsumpMedian(dateSample1, dateSample2),
                 is(BigDecimal.valueOf(250)));
     }
-
     @Test
     public void dayFoodConsumpMedian() throws Exception {
-        rep.getRl().printList(fit.getCalories(), dateSample1);
         assertThat(rep.calcFoodConsumpMedian(dateSample1), is(BigDecimal
                 .valueOf(225)));
     }
 
     @Test
     public void dayStepsPercent() throws Exception {
-        rep.getRl().printList(fit.getSteps(), dateSample1);
         assertThat(rep.calcStepsPercent(dateSample1), is(new
                 BigDecimal("182.50")));
     }
 
     @Test
     public void weekStepsPercent() throws Exception {
-        rep.getRl().printList(fit.getSteps(), dateSample1, dateSample2);
         assertThat(rep.calcStepsPercent(dateSample1, dateSample2),
                 is(new BigDecimal("95.00")));
     }
 
     @Test
     public void weekStepsMedian() throws Exception {
-        rep.getRl().printList(fit.getSteps(), dateSample1, dateSample2);
         assertThat(rep.calcStepsMedian(dateSample1, dateSample2),
                 is(BigDecimal.valueOf(300)));
     }
 
     @Test
     public void dayStepsMedian() throws Exception {
-        rep.getRl().printList(fit.getSteps(), dateSample1);
         assertThat(rep.calcStepsMedian(dateSample1), is(BigDecimal
                 .valueOf(250)));
     }
 
     @Test
     public void dayHoursPercent() throws Exception {
-        rep.getRl().printList(fit.getHours(), dateSample1);
         assertThat(rep.calcHoursPercent(dateSample1), is(new
                 BigDecimal("160.00")));
     }
 
     @Test
     public void weekHoursPercent() throws Exception {
-        rep.getRl().printList(fit.getHours(), dateSample1, dateSample2);
         assertThat(rep.calcHoursPercent(dateSample1, dateSample2),
                 is(new BigDecimal("62.15")));
     }
 
     @Test
     public void weekHoursMedian() throws Exception {
-        rep.getRl().printList(fit.getHours(), dateSample1, dateSample2);
         assertThat(rep.calcHoursMedian(dateSample1, dateSample2),
                 is(BigDecimal.valueOf(0.20)));
     }
 
     @Test
     public void dayHoursMedian() throws Exception {
-        rep.getRl().printList(fit.getHours(), dateSample1);
         assertThat(rep.calcHoursMedian(dateSample1), is(BigDecimal
                 .valueOf(0.50)));
     }
