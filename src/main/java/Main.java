@@ -6,6 +6,6 @@ public class Main {
         System.out.println("FitnessCalculator");
         Human human = new Human();
         TestDataSource.init(human);
-        System.out.println(human);//d
+        System.out.println(human);
     }
 }
