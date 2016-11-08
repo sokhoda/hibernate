@@ -1,22 +1,45 @@
 package domain;
 
+import converters.DateConverter;
 import main.DoseCalculator;
 import report.Report;
 import report.ReportLogic;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Human {
+@Entity
+public class Human implements Serializable {
+    @Id
+    @SequenceGenerator(initialValue = 1, name = "HUMANGEN")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "HUMANGEN")
+    private Long id;
+    private String name;
 
-    private final LocalDate now = LocalDate.now();
+    @Convert(converter = DateConverter.class)
+    private final LocalDateTime now = LocalDateTime.now();
+    @Transient
     private final List<Record<Integer>> water = new ArrayList<>();
+    @Transient
     private final List<Record<Integer>> calories = new ArrayList<>();
+    @Transient
     private final List<Record<Double>> hours = new ArrayList<>();
+    @Transient
     private final List<Record<Integer>> steps = new ArrayList<>();
+    @Transient
     private final ReportLogic rl = new ReportLogic(Report.getDigits());
+
+    @OneToOne(cascade = CascadeType.ALL)
     private DoseCalculator dc;
+
+    public Human(String name) {
+        this();
+        this.name = name;
+    }
 
     public Human() {
         init();
@@ -137,5 +160,37 @@ public class Human {
         result = 31 * result + (rl != null ? rl.hashCode() : 0);
         result = 31 * result + (dc != null ? dc.hashCode() : 0);
         return result;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public LocalDateTime getNow() {
+        return now;
+    }
+
+    public ReportLogic getRl() {
+        return rl;
+    }
+
+    public DoseCalculator getDc() {
+        return dc;
+    }
+
+    public void setDc(DoseCalculator dc) {
+        this.dc = dc;
     }
 }
