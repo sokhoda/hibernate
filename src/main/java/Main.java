@@ -2,7 +2,6 @@ import domain.Human;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import persistence.HibernateUtil;
 import testdatasource.TestDataSource;
 
