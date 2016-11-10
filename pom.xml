@@ -3,9 +3,6 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <packaging>pom</packaging>
-
-
     <groupId>com</groupId>
     <artifactId>hibernateConfig</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -64,14 +61,9 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-            <!--<activation>-->
-            <!--<file>-->
-            <!--<exists>src/main/resources/execution.properties</exists>-->
-            <!--</file>-->
-            <!--</activation>-->
             <build>
                 <filters>
-                    <filter>java/main/filters/jdbc.properties</filter>
+                    <filter>src/main/resources/jdbc.properties</filter>
                 </filters>
                 <resources>
                     <resource>
@@ -110,9 +102,17 @@
 
 
     <build>
-
         <sourceDirectory>src/main/java</sourceDirectory>
-        <finalName>MyMavenProject</finalName>
+        <finalName>MyHibernateProject</finalName>
+        <filters>
+            <filter>src/main/resources/jdbc.properties</filter>
+        </filters>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
